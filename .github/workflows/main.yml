@@ -34,7 +34,7 @@ jobs:
       with:
         project_id: test-project-01-513003
 
-- name: Create Compute Engine VM
+    - name: Create Compute Engine VM
       run: |
         gcloud compute instances create vm-instance \
         --zone=us-west1-a \
