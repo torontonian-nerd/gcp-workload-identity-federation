@@ -1,0 +1,44 @@
+name: Deploy VM to Google Cloud
+
+on:
+  push:
+    branches: [ "main" ] # Replace with the branch name you want
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: 'write'
+
+jobs:
+  deploy:
+    name: 'Deploy VM'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - id: auth
+      uses: google-github-actions/auth@v2.0.0
+      with:
+        workload_identity_provider: 'projects/84443251113/locations/global/workloadIdentityPools/github-pool/providers/github-action-provider'
+        service_account: 'github-sa@test-project-01-513003.iam.gserviceaccount.com'
+
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: test-project-01-513003
+
+    - name: Create Compute Engine VM
+      run: |
+        gcloud compute instances create vm-instance \
+        --zone=us-west1-a \
+        --image-family=ubuntu-2004-lts \
+        --image-project=ubuntu-os-cloud \
+        --machine-type=e2-micro \
+        --boot-disk-size=10GB
