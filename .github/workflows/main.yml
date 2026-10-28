@@ -34,11 +34,11 @@ jobs:
       with:
         project_id: test-project-01-513003
 
-    - name: Create Compute Engine VM
+- name: Create Compute Engine VM
       run: |
         gcloud compute instances create vm-instance \
         --zone=us-west1-a \
-        --image-family=ubuntu-2004-lts \
+        --image=ubuntu-2004-focal-v20240423 \
         --image-project=ubuntu-os-cloud \
         --machine-type=e2-micro \
-        --boot-disk-size=10GB
+        --boot-disk-size=200GB
