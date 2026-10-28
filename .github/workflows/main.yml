@@ -39,6 +39,7 @@ jobs:
         gcloud compute instances create vm-instance \
         --zone=us-west1-a \
         --image-family=ubuntu-2004-lts \
+        --image-family-scope=global \
         --image-project=ubuntu-os-cloud \
         --machine-type=e2-micro \
         --boot-disk-size=200GB
